@@ -13,18 +13,9 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import { useSelector } from "react-redux";
-import {useNavigate}  from 'react-router-dom'
-
-
+import { useNavigate } from "react-router-dom";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -42,8 +33,6 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -61,49 +50,42 @@ const headCells = [
     id: "name",
     numeric: false,
     disablePadding: true,
-    label: "Name"
+    label: "Name",
   },
   {
     id: "enrolledCourseCount",
     numeric: true,
     disablePadding: false,
-    label: "Enrolled Course"
+    label: "Enrolled Course",
   },
   {
     id: "downloadedAssignmentsCount",
     numeric: true,
     disablePadding: false,
-    label: "Downloaded Assignments"
+    label: "Downloaded Assignments",
   },
   {
     id: "uploadedAssignmentsCount",
     numeric: true,
     disablePadding: false,
-    label: "Uploaded Assignments"
+    label: "Uploaded Assignments",
   },
   {
     id: "checkedAssignmentCount",
     numeric: true,
     disablePadding: false,
-    label: "Assignments Checked"
+    label: "Assignments Checked",
   },
   {
     id: "profilePic",
     numeric: true,
     disablePadding: false,
-    label: "Action"
-  }
+    label: "Action",
+  },
 ];
 
 function EnhancedTableHead(props) {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort
-  } = props;
+  const { order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -111,28 +93,14 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        {/* <TableCell padding="checkbox">
-          <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              "aria-label": "select all desserts"
-            }}
-          />
-        </TableCell> */}
         {headCells.map((headCell) => {
           console.log(headCell);
           return (
             <TableCell
               key={headCell.id}
-              // align={headCell.numeric ? "right" : "left"}
-              align='center'
-              // padding={headCell.disablePadding ? "none" : "normal"}
-              padding= "normal"
+              align="center"
+              padding="normal"
               sortDirection={orderBy === headCell.id ? order : false}
-
             >
               <TableSortLabel
                 active={orderBy === headCell.id}
@@ -162,7 +130,7 @@ EnhancedTableHead.propTypes = {
   onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(["asc", "desc"]).isRequired,
   orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired
+  rowCount: PropTypes.number.isRequired,
 };
 
 const EnhancedTableToolbar = (props) => {
@@ -178,8 +146,8 @@ const EnhancedTableToolbar = (props) => {
             alpha(
               theme.palette.primary.main,
               theme.palette.action.activatedOpacity
-            )
-        })
+            ),
+        }),
       }}
     >
       {numSelected > 0 ? (
@@ -201,26 +169,12 @@ const EnhancedTableToolbar = (props) => {
           Students Record
         </Typography>
       )}
-
-      {/* {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )} */}
     </Toolbar>
   );
 };
 
 EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired
+  numSelected: PropTypes.number.isRequired,
 };
 
 export default function AdminStudentTable() {
@@ -228,7 +182,7 @@ export default function AdminStudentTable() {
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
+  const [dense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const { users } = useSelector((state) => state.info);
@@ -236,44 +190,42 @@ export default function AdminStudentTable() {
 
   const goToStudentDetails = (id) => {
     navigate(`/home/students/details/${id}`);
-  }
+  };
 
   const students = users.filter((u) => u.role === "student");
   const studentsData = students.map((s) => {
-    const id =  s.uid;
+    const id = s.uid;
     const name = s.name;
     const active = "" + s.active;
     let enrolledCourseCount = 0;
-    s.enrolledCourse.forEach((ec) => enrolledCourseCount += 1);
+    s.enrolledCourse.forEach((ec) => (enrolledCourseCount += 1));
 
     let downloadedAssignmentsCount = 0;
     s.enrolledCourse.forEach((ec) => {
-      ec.assignmentDetails.forEach(ad => {
+      ec.assignmentDetails.forEach((ad) => {
         if (ad?.isAssignmentDownloaded) {
           downloadedAssignmentsCount += 1;
         }
-      } );
+      });
     });
 
     let uploadedAssignmentsCount = 0;
     s.enrolledCourse.forEach((ec) => {
-      ec.assignmentDetails.forEach(ad => {
+      ec.assignmentDetails.forEach((ad) => {
         if (ad?.isAssignmentUploaded) {
           uploadedAssignmentsCount += 1;
         }
-      } );
+      });
     });
-    
+
     let checkedAssignmentCount = 0;
     s.enrolledCourse.forEach((ec) => {
-      ec.assignmentDetails.forEach(ad => {
+      ec.assignmentDetails.forEach((ad) => {
         if (ad?.isChecked) {
           checkedAssignmentCount += 1;
         }
-      } );
+      });
     });
-
-
 
     const profilePic = s.profilePic;
     return {
@@ -284,13 +236,11 @@ export default function AdminStudentTable() {
       enrolledCourseCount,
       downloadedAssignmentsCount,
       uploadedAssignmentsCount,
-      profilePic
+      profilePic,
     };
   });
 
- console.log("studetsdata", studentsData)
-
-
+  console.log("studetsdata", studentsData);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -307,26 +257,6 @@ export default function AdminStudentTable() {
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
-  };
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -336,13 +266,8 @@ export default function AdminStudentTable() {
     setPage(0);
   };
 
-  const handleChangeDense = (event) => {
-    setDense(event.target.checked);
-  };
-
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
-  // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - studentsData.length) : 0;
 
@@ -365,8 +290,6 @@ export default function AdminStudentTable() {
               rowCount={studentsData.length}
             />
             <TableBody>
-              {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                 rows.slice().sort(getComparator(order, orderBy)) */}
               {stableSort(studentsData, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
@@ -376,38 +299,40 @@ export default function AdminStudentTable() {
                   return (
                     <TableRow
                       hover
-                      // onClick={(event) => handleClick(event, row.name)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row.name}
                       selected={isItemSelected}
                     >
-                      {/* <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            "aria-labelledby": labelId
-                          }}
-                        />
-                      </TableCell> */}
                       <TableCell
                         component="th"
                         id={labelId}
                         scope="row"
                         padding="normal"
-                        sx={{textTransform: "capitalize", padding: '0px 5px'}}
+                        sx={{ textTransform: "capitalize", padding: "0px 5px" }}
                       >
                         {row.name}
                       </TableCell>
-                      <TableCell align="center">{row.enrolledCourseCount}</TableCell>
-                      <TableCell align="center">{row.downloadedAssignmentsCount}</TableCell>
-                      <TableCell align="center">{row.uploadedAssignmentsCount}</TableCell>
-                      <TableCell align="center">{row.checkedAssignmentCount}</TableCell>
-                      {/* <TableCell align="right">{row.active}</TableCell> */}
+                      <TableCell align="center">
+                        {row.enrolledCourseCount}
+                      </TableCell>
+                      <TableCell align="center">
+                        {row.downloadedAssignmentsCount}
+                      </TableCell>
+                      <TableCell align="center">
+                        {row.uploadedAssignmentsCount}
+                      </TableCell>
+                      <TableCell align="center">
+                        {row.checkedAssignmentCount}
+                      </TableCell>
                       <TableCell>
-                        <button className="btn" onClick={()=> goToStudentDetails(row.id)}>View Details</button>
+                        <button
+                          className="btn"
+                          onClick={() => goToStudentDetails(row.id)}
+                        >
+                          View Details
+                        </button>
                       </TableCell>
                     </TableRow>
                   );
@@ -415,7 +340,7 @@ export default function AdminStudentTable() {
               {emptyRows > 0 && (
                 <TableRow
                   style={{
-                    height: (dense ? 33 : 53) * emptyRows
+                    height: (dense ? 33 : 53) * emptyRows,
                   }}
                 >
                   <TableCell colSpan={6} />

@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ImUsers } from "react-icons/im";
 import { MdOutlineGolfCourse } from "react-icons/md";
 import { MdCreate } from "react-icons/md";
-import { FaFileDownload, FaFileUpload } from "react-icons/fa";
+import { FaFileUpload } from "react-icons/fa";
 import "./widgets.css";
 import { useSelector } from "react-redux";
 
@@ -26,15 +26,10 @@ const Widgets = ({ type }) => {
 
   const uACount = uploadedAssignments.reduce((prev, curr) => prev + curr, uAInitValue);
 
-
-// created assignments
-
   const createdAssignments = courses.map(c => c.topics.length);
   let cAInitValue = 0;
 
   const cACount = createdAssignments.reduce((prev, curr) => prev + curr, cAInitValue);
-  
-  // console.log("created assignments: " + createdAssignments);
 
 
   let data;
@@ -66,13 +61,6 @@ const Widgets = ({ type }) => {
     };
   } 
   
-  // else {
-  //   data = {
-  //     title: "downloaded  assignments",
-  //     counts: downloadedAssignments.length,
-  //     icons: <FaFileDownload size="30" color="powderblue" />,
-  //   };
-  // }
 
   return (
     <div className="widget-card">

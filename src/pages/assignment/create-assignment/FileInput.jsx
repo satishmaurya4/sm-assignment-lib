@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { MdComputer } from "react-icons/md";
 import { useDispatch } from "react-redux";
-import { alert } from "../../../features/ui/uiSlice";
+import {alert} from '../../../features/ui/uiSlice'
 
 
 const FileInput = ({ getFile }) => {
   const [data, setData] = useState(null);
   const dispatch = useDispatch();
-    console.log(data);
-    // if (data) {
-    //   dispatch(alert({status: 'success', message: `You have choosen ${data.name} file!`, isOpen:true }))
-    // }
-    // useEffect(() => {
+    // console.log(data);
       getFile(data);
-  // },[data])
+  useEffect(() => {
+    if (data) {
+      dispatch(alert({status: 'success', message: `You have choosen ${data?.name} file!`, isOpen:true }))
+          
+        }
+  },[data])
   return (
     <>
       <label htmlFor="fileInput">

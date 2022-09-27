@@ -9,7 +9,6 @@ import { alert } from "../../features/ui/uiSlice";
 import { database } from "../../firebaseConfig";
 import "./studentDetails.css";
 import { FiChevronDown,FiChevronUp } from "react-icons/fi";
-import { format } from "date-fns";
 
 
 import AdminSingleStudentTable from "../../components/stats/admin/AdminSingleStudentTable";
@@ -105,6 +104,8 @@ const AdminStudentDetails = () => {
 
     setShowAssignedOption(false);
   };
+
+  console.log("singleStudentData", singleStudentData);
 
   const assignOptions = courses.map((c) => (
     <p onClick={() => handleAssignCourse(c.courseName)}>{c.courseName}</p>

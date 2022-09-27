@@ -270,6 +270,8 @@ export default function AdminSingleStudentTable({ assignedCourse,singleStudentDa
   const { users } = useSelector(state => state.info);
   const { id } = useParams();
 
+  console.log("*****", data);
+
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -324,7 +326,7 @@ export default function AdminSingleStudentTable({ assignedCourse,singleStudentDa
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0
-      ? Math.max(0, (1 + page) * rowsPerPage - data.length)
+      ? Math.max(0, (1 + page) * rowsPerPage - singleStudentData.length)
       : 0;
 
   // checked options
@@ -408,12 +410,12 @@ export default function AdminSingleStudentTable({ assignedCourse,singleStudentDa
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={data.length}
+              rowCount={singleStudentData.length}
             />
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-              {stableSort(data, getComparator(order, orderBy))
+              {stableSort(singleStudentData, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.topicName);
@@ -504,7 +506,7 @@ export default function AdminSingleStudentTable({ assignedCourse,singleStudentDa
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={data.length}
+          count={singleStudentData.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

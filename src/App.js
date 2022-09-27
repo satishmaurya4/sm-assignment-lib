@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { Routes, Route, useLocation} from "react-router-dom";
 import Auth from "./features/auth/Auth";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Course from "./pages/create/Course";
@@ -16,7 +16,6 @@ import Unauthorized from "./pages/unauthorized/Unauthorized";
 import { useEffect } from "react";
 import { onSnapshot } from "firebase/firestore";
 import { collectionRef, userCollectionRef } from "./firebaseConfig";
-import { getAuth } from "firebase/auth";
 import AdminCourseDetails from "./components/stats/admin/AdminCourseDetails";
 import AdminStudentDetails from "./pages/studentsDetails/AdminStudentDetails";
 import Layout from "./components/Layout";
