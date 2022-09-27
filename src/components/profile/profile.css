@@ -1,0 +1,32 @@
+.profile-container{
+    width: 200px;
+    padding: 10px;
+    border-radius: 10px;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color:#00dadb ;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+}
+.profile-container p{
+    color: #fff;
+    font-size: 18px;
+}
+.profile-container button{
+    background-color: #1f305b;
+    border: none;
+    padding: 5px 10px;
+    color: #fff;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+.profile-container button:hover{
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.profile-pic-action{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

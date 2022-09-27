@@ -1,0 +1,18 @@
+.content-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.content{
+    display: flex;
+    justify-content: space-between;
+}
+.content-header{
+    border-bottom: 1px solid gray;
+    padding-bottom: 5px;
+}
+.content-topic{
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    padding: 10px;
+}

@@ -1,0 +1,19 @@
+.dropdown{
+    display: flex;
+    justify-content: space-between;
+    padding:8px 5px;
+    align-items: center;
+    position: relative;
+}
+.dropdown-list-item{
+    text-transform: capitalize;
+}
+.dropdown-list{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 2;
+}
+.student-form{
+    margin-top: 40px;;
+}

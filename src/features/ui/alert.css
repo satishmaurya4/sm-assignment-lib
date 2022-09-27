@@ -1,0 +1,11 @@
+.alert-container{
+    width: max-content;
+    padding: 10px 20px;
+    border-radius: 10px;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: red;
+    z-index: 9999;
+}

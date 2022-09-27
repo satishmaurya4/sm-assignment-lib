@@ -1,0 +1,28 @@
+.content-topic{
+    background-color: #1f305b;
+}
+.content-header{
+    margin: 10px 0;
+}
+.assignment-action-btn{
+    display: flex;
+    gap: 10px;
+}
+.assignment-action-btn button{
+    background-color: #00dadb;
+    line-height: 24px;
+    height: 24px;
+    border: none;
+    border-radius: 5px;
+    padding: 0px 10px;
+    color: #fff;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+.assignment-action-btn button:hover{
+    opacity: 0.8;
+    cursor: pointer;
+}
+.topic{
+    color: #fff;
+}

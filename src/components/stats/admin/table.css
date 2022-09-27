@@ -1,0 +1,38 @@
+.table-container{
+  border: 1px solid red;
+}
+.table-header{
+  display: flex;
+  gap: 10px;
+}
+.table-content{
+  display: flex;
+  gap: 10px;
+}
+.true-icon{
+  color: lime;
+  font-size: 20px;
+}
+.false-icon{
+  color: tomato;
+  font-size: 20px;
+}
+.asst-checked-container{
+position: relative;
+border: 1px solid red;
+}
+.asst-checked-toggle{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+.asst-options{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 100%;
+}

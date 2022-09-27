@@ -1,0 +1,30 @@
+.pnf-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #fff;
+  }
+  .pnf-title {
+    color: #00dadb;
+  }
+  
+  .pnf-img {
+    width: 340px;
+    height: 380px;
+  }
+
+  .pnf-container button{
+    height: 28px;
+        outline: none;
+        background-color: #1f305b;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      padding: 5px 10px;
+    }

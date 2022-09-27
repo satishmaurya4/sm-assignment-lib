@@ -1,13 +1,103 @@
-body {
+*{
+  padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+}
+body{
+  font-family: 'Poppins', sans-serif;
+  background-color: #1f305b;
+}
+.page-container{
+  min-width: 920px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.ul{
+  list-style: none;
+}
+.link{
+  text-decoration: none;
+}
+.btn{
+  outline: none;
+  cursor: pointer;
+  width: max-content;
+  padding: 5px 10px;
+  font-size: 16px;
+  letter-spacing: 0.6;
+  background-color: #1f305b;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  color: #fff;
+}
+
+/* scrollbar */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  /* border-radius: 10px; */
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(181, 181, 181); 
+  /* border-radius: 10px; */
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+  background: gray; 
+}
+
+
+
+
+
+
+/* responsive */
+
+@media screen and (max-width: 870px) {
+ .form-wrapper{
+  width: 80vw !important;
+ }
+}
+@media screen and (max-width: 680px) {
+ .form-wrapper{
+  width: 95vw !important;
+ }
+}
+@media screen and (max-width: 560px) {
+ .form-wrapper{
+  width: 80vw !important;
+ }
+ .login-content{
+  flex-direction: column !important;
+  gap: 10px;
+ }
+}
+@media screen and (max-width: 374px) {
+ .form-wrapper{
+  width: 80vw !important;
+ }
+ .form-logo{
+  width: 200px !important;
+  height: 40px !important;
+ }
+ .login-title{
+  font-size: 18px !important;
+ }
+ .login-content{
+  flex-direction: column !important;
+  gap: 10px;
+ }
+ .input-group input{
+  width: 100% !important;
+ }
+
 }

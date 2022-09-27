@@ -1,0 +1,122 @@
+.sidebar-wrapper{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 200px;
+    /* border-right: 1px solid rgb(191, 191, 191); */
+    z-index: 999;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    background-color: #00dadb;
+ 
+}
+.sidebar-logo-wrapper{
+    height: 60px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border-bottom: 1px solid rgb(191, 191, 191); */
+    background-color: #fff;
+}
+.sidebar-logo-wrapper img{
+    cursor: pointer;
+}
+.sidebar-list-wrapper{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.logo{
+    height: 30px;
+    width: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.sidebar-wrapper .ul{
+    padding: 10px;
+}
+.sidebar-list-wrapper{
+    /* border: 1px solid red; */
+    /* background-color: #fff; */
+    width: 80%;
+}
+.ul a{
+    color: rgb(36, 36, 36);
+    font-size: 18px;
+    /* border-bottom: 1px solid gray; */
+   
+
+}
+.dropdown-wrapper{
+    background-color: #fff;
+    border-radius: 5px;
+}
+.sidebar-link{
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    transition: all 0.3s;
+    text-transform: capitalize;
+    padding: 0px 5px;
+    cursor: pointer;
+
+}
+/* .sidebar-link.active{
+    background-color: #1f305b;
+    color: #fff;
+}
+.active{
+    background-color: #1f305b;
+    color: #fff;
+} */
+.sidebar-link:hover{
+    background-color: #1f305b;
+    color: #fff;
+}
+.sidebar-dropdown{
+    justify-content: space-between;
+    padding: 0px 10px;
+    cursor: pointer;
+    border-bottom: 1px solid gray;
+
+}
+/* .sidebar-dropdown:hover */
+.dropdown-list{
+    /* box-shadow: 0px 0px 10px rgba(0,0,0,0.2); */
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    max-height: 70vh;
+    overflow-y: auto ;
+
+    
+}
+.dropdown-list li{
+    padding: 2px 5px;
+    text-transform: capitalize;
+    border-radius: 5px;
+    width: max-content;
+    transition: all 0.3s;
+}
+.dropdown-list li:hover{
+    background-color: #1f305b;
+    color: #fff;  
+    cursor: pointer; 
+}
+
+.la{
+    align-self: flex-start;
+    padding: 0px 5px;
+}
+
