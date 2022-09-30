@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { MdComputer } from "react-icons/md";
 import { useDispatch } from "react-redux";
-import {alert} from '../../../features/ui/uiSlice'
-
+import { alert } from "../../../features/ui/uiSlice";
 
 const FileInput = ({ getFile }) => {
   const [data, setData] = useState(null);
   const dispatch = useDispatch();
-    // console.log(data);
-      getFile(data);
+  // console.log(data);
   useEffect(() => {
     if (data) {
-      dispatch(alert({status: 'success', message: `You have choosen ${data?.name} file!`, isOpen:true }))
-          
-        }
-  },[data])
+      getFile(data);
+      dispatch(
+        alert({
+          status: "success",
+          message: `You have choosen ${data?.name} file!`,
+          isOpen: true,
+        })
+      );
+    }
+    console.log("useEffect called");
+  }, [data]);
+  console.log("file", data);
   return (
     <>
       <label htmlFor="fileInput">
@@ -23,6 +29,7 @@ const FileInput = ({ getFile }) => {
           className="assignment-icon"
           title="Choose from computer"
         />
+        upload
       </label>
       <input
         type="file"

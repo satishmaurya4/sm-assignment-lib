@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation} from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Auth from "./features/auth/Auth";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Course from "./pages/create/Course";
@@ -8,7 +8,12 @@ import { currentTime } from "./utils/currentTime";
 import Alert from "./features/ui/Alert";
 import CreateAssignment from "./pages/assignment/create-assignment/CreateAssignment";
 import { useDispatch, useSelector } from "react-redux";
-import { alert, loading, setIsContentLoading } from "./features/ui/uiSlice";
+import {
+  alert,
+  loading,
+  setIsContentLoading,
+  setUploading,
+} from "./features/ui/uiSlice";
 import { getCourses, getUsers } from "./features/info/infoSlice";
 import RequireAuth from "./components/RequireAuth";
 import PageNotFound from "./pages/404/PageNotFound";
@@ -61,6 +66,15 @@ function App() {
       clearTimeout(id);
     };
   }, [ui.isLoading]);
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      dispatch(setUploading(false));
+    }, 3000);
+    return () => {
+      clearTimeout(id);
+    };
+  }, [ui.isUploading]);
 
   useEffect(() => {
     onSnapshot(collectionRef, (data) => {

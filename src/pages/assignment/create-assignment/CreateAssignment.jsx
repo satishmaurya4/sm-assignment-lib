@@ -9,14 +9,18 @@ import { AiOutlineUpload } from "react-icons/ai";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useDispatch, useSelector } from "react-redux";
-import { alert, loading } from "../../../features/ui/uiSlice";
+import { alert, loading, setUploading } from "../../../features/ui/uiSlice";
 import Sidebar from "../../../components/sidebar/Sidebar";
 import Header from "../../../components/header/Header";
 import { FiEdit } from "react-icons/fi";
 import { AiFillDelete } from "react-icons/ai";
+import { MdComputer } from "react-icons/md";
+
 import { TiTick } from "react-icons/ti";
 import FileInput from "./FileInput";
 import { format } from "date-fns";
+import Uploading from "../../../features/ui/uploading/Uploading";
+import { getCourses } from "../../../features/info/infoSlice";
 
 const CreateAssignment = () => {
   // const [data, setData] = useState({});
@@ -24,6 +28,10 @@ const CreateAssignment = () => {
   const [topic, setTopic] = useState("");
   const [assignmentMark, setAssignmentMark] = useState("");
   const [matchedCourse, setMatchedCourse] = useState({});
+  const [file, setFile] = useState({
+    fileInfo: null,
+    selectedTopic: "",
+  });
   const { state } = useLocation();
   const dispatch = useDispatch();
   const ui = useSelector((state) => state.ui);
@@ -40,8 +48,17 @@ const CreateAssignment = () => {
   // we will be using later on
   // const { courseName, topics, uid } = matchedCourse;
   const submitFile = (selectedTopic) => {
-    dispatch(loading(true));
-    if (!data) {
+    const selectedCourse = courses.find((c) => c.courseName === state);
+
+    const matchedTopic = selectedCourse.topics.find(
+      (t) => t.topicName === selectedTopic
+    );
+
+    let isFileExist = matchedTopic.fileName;
+
+    console.log("****", matchedTopic, isFileExist);
+
+    if (!isFileExist) {
       dispatch(
         alert({
           status: "error",
@@ -51,8 +68,8 @@ const CreateAssignment = () => {
       );
       return;
     }
-    const storageRef = ref(storage, data.name);
-    const uploadTask = uploadBytesResumable(storageRef, data);
+    const storageRef = ref(storage, isFileExist);
+    const uploadTask = uploadBytesResumable(storageRef, file.fileInfo);
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -69,6 +86,7 @@ const CreateAssignment = () => {
         //     console.log('Upload is running');
         //     break;
         // }
+        dispatch(setUploading(true));
       },
       (error) => {
         // Handle unsuccessful uploads
@@ -94,13 +112,13 @@ const CreateAssignment = () => {
           //   );
           // }
 
-          const updatedDoc = matchedCourse?.topics.map((topic) => {
+          const updatedDoc = selectedCourse?.topics.map((topic) => {
             if (topic.topicName === selectedTopic) {
               return {
                 ...topic,
                 isAssignmentUploaded: true,
                 documentUrl: downloadURL,
-                fileName: data.name,
+                fileName: isFileExist,
               };
             }
             return topic;
@@ -118,7 +136,11 @@ const CreateAssignment = () => {
                   isOpen: true,
                 })
               );
-              dispatch(loading(false));
+              dispatch(setUploading(false));
+              setFile({
+                fileInfo: null,
+                selectedTopic: "",
+              });
             })
             .catch((err) => console.log(err));
         });
@@ -208,6 +230,116 @@ const CreateAssignment = () => {
     data = fileName;
   };
 
+  const handleFileChange = (event, index, selectedTopic) => {
+    // setFile(e.target.files[0]);
+    const fileObj = JSON.stringify(event.target.files);
+
+    // courses.forEach((c) => {
+    //   if (c.courseName === state) {
+    //     console.log("courseName: " + c.courseName);
+    //     c.topics.forEach((t) => {
+    //       if (t.topicName === selectedTopic) {
+    //         t.isAssignmentUploaded = true;
+    //         t.fileName = e.target.files[0];
+    //       }
+    //     });
+    //   }
+    // });
+
+    const updatedDoc = courses.map((c) => {
+      if (c.courseName === state) {
+        const updatedTopic = c.topics.map((t) => {
+          if (t.topicName === selectedTopic) {
+            return {
+              ...t,
+              isAssignmentUploaded: true,
+              fileName: event.target.files[0],
+            };
+          }
+          return t;
+        });
+        return {
+          ...c,
+          topics: updatedTopic,
+        };
+      }
+      return c;
+    });
+
+    console.log(
+      "updated doc: " + event.target,
+      fileObj,
+      JSON.stringify(updatedDoc)
+    );
+
+    // const matchedCourse = courses.find(c => c.courseName === state);
+
+    // const newState = [...courses];
+    // newState[index] = {
+    //   ...newState[index],
+    //   isAssignmentUploaded: true,
+    //   fileName: e.target.files[0],
+    // };
+
+    // console.log("new index", newState[index]);
+
+    // setFile(e.target.files[0]);
+    // getCourses(newState);
+    // const modified = JSON.stringify(newState);
+
+    console.log("new state: " + courses);
+  };
+
+  const obj = {
+    name: "satish",
+    age: 18,
+  };
+
+  console.log("temp obj", obj);
+  console.log("temp obj" + JSON.stringify(obj));
+
+  const fileInfo = file.fileInfo;
+  console.log("***", fileInfo);
+
+  useEffect(() => {
+    // console.log("file info: ", file.fileInfo);
+    // console.log("file", file.fileInfo);
+
+    if (file.fileInfo) {
+      // console.log("file info: ", file.fileInfo);
+      dispatch(
+        alert({
+          status: "success",
+          message: `You have selected ${file.fileInfo.name} file!`,
+          isOpen: true,
+        })
+      );
+      const updatedDoc = courses.map((c) => {
+        if (c.courseName === state) {
+          const updatedTopic = c.topics.map((t) => {
+            if (t.topicName === file.selectedTopic) {
+              // console.log("file info: ", file.fileInfo.name);
+
+              return {
+                ...t,
+                fileName: file.fileInfo.name,
+              };
+            }
+            return t;
+          });
+          return {
+            ...c,
+            topics: updatedTopic,
+          };
+        }
+        return c;
+      });
+
+      console.log("updated doc: ", JSON.stringify(updatedDoc));
+      dispatch(getCourses(updatedDoc));
+    }
+  }, [file.fileInfo]);
+
   useEffect(() => {
     if (!state) {
       setMatchedCourse(courses[0]);
@@ -219,18 +351,19 @@ const CreateAssignment = () => {
     console.log("create assignment useEffect");
   }, [state, courses]);
 
+  console.log(file);
+
   return (
     <div className="page-container">
       <Sidebar />
       <Header />
-
+      {ui.isUploading && <Uploading />}
       <Wrapper>
         <div className="edit-course" onClick={() => setEditForm(!editForm)}>
           <FiEdit />
         </div>
         <div>
           {matchedCourse?.topics?.length === 0 && <h2>Loading...</h2>}
-
           {matchedCourse?.topics?.length > 0 && (
             <>
               <h2 classname="assignment-title">
@@ -252,32 +385,42 @@ const CreateAssignment = () => {
                       {topic.isAssignmentUploaded ? (
                         <TiTick color="lime" size="30" />
                       ) : (
-                        <FileInput getFile={getFile} />
+                        <>
+                          <label
+                            htmlFor="fileInput"
+                            className="assignment-icon"
+                            title="Choose file"
+                          >
+                            <MdComputer color="#fff" size="30" />
+                          </label>
+                          <input
+                            type="file"
+                            id="fileInput"
+                            onChange={(e) =>
+                              setFile({
+                                fileInfo: e.target.files[0],
+                                selectedTopic: topic.topicName,
+                              })
+                            }
+                            style={{ display: "none" }}
+                          />
+                        </>
                       )}
 
                       {topic.isAssignmentUploaded ? (
                         <TiTick color="lime" size="30" />
                       ) : (
-                        <>
-                          {ui.isLoading ? (
-                            <CircularProgress
-                              size={20}
-                              sx={{ color: "#00dadb" }}
-                            />
-                          ) : (
-                            <AiOutlineUpload
-                              onClick={() =>
-                                submitFile(
-                                  topic.topicName,
-                                  matchedCourse?.courseName
-                                )
-                              }
-                              size="30"
-                              className="assignment-icon"
-                              title="Upload"
-                            />
-                          )}
-                        </>
+                        <AiOutlineUpload
+                          onClick={() =>
+                            submitFile(
+                              topic.topicName,
+                              matchedCourse?.courseName
+                            )
+                          }
+                          size="30"
+                          className="assignment-icon"
+                          title="Upload"
+                        />
                       )}
 
                       <AiFillDelete
